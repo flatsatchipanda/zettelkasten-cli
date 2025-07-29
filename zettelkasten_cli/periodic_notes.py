@@ -4,7 +4,7 @@ from pathlib import Path
 import typer
 from rich import print
 
-from zettelkasten_cli.config import ZETTELKASTEN_ROOT
+from zettelkasten_cli.config import ZETTELKASTEN_ROOT, TEMPLATES_PATH
 from zettelkasten_cli.utils import format_date, format_week, open_in_editor
 
 app = typer.Typer()
@@ -17,12 +17,12 @@ LAST_WEEK = format_week(-7)  # Correct this to start on Monday and end Sunday
 NEXT_WEEK = format_week(7)  # Correct this to start on Monday and end Sunday
 CONFIG_PATH = Path(os.environ.get("XDG_CONFIG_HOME", ""))
 
-DAILY_NOTES_PATH = ZETTELKASTEN_ROOT / "periodic-notes" / "daily"
-DAILY_NOTES_TEMPLATE_PATH = ZETTELKASTEN_ROOT / "zk" / "daily.md"
+DAILY_NOTES_PATH = ZETTELKASTEN_ROOT / "01_daily"
+DAILY_NOTES_TEMPLATE_PATH = TEMPLATES_PATH / "daily.md"
 TODAY_NOTE_PATH = DAILY_NOTES_PATH / f"{TODAY}.md"
 
-WEEKLY_NOTES_PATH = ZETTELKASTEN_ROOT / "periodic-notes" / "weekly"
-WEEKLY_NOTES_TEMPLATE_PATH = ZETTELKASTEN_ROOT / "zk" / "weekly.md"
+WEEKLY_NOTES_PATH = ZETTELKASTEN_ROOT / "02_weekly"
+WEEKLY_NOTES_TEMPLATE_PATH = TEMPLATES_PATH / "weekly.md"
 THIS_WEEK_NOTE_PATH = WEEKLY_NOTES_PATH / f"{THIS_WEEK}.md"
 
 
@@ -39,6 +39,7 @@ def format_daily_note_content() -> str:
     try:
         if DAILY_NOTES_TEMPLATE_PATH.exists():
             template_content = DAILY_NOTES_TEMPLATE_PATH.read_text()
+            template_content = template_content.replace("{date}", TODAY) # 変数代入
             content += template_content
         else:
             print(f"Warning: Template file not found at {DAILY_NOTES_TEMPLATE_PATH}")

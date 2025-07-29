@@ -81,3 +81,29 @@ Run `zk` to get started.
 == OR ==
 
 Simply run `poetry install && poetry run zk`
+
+---
+
+## インストール
+
+1. ダウンロード
+
+```shell
+cd ~/Projects
+git clone git@github.com:flatsatchipanda/zettelkasten-cli.git
+```
+
+2. インストール
+
+```shell
+uv venv -p python3.12 ~/.virtualenvs/zettelkasten-cli
+uv pip install -p ~/.virtualenvs/zettelkasten-cli/bin/python .
+ln -s ~/.virtualenvs/zettelkasten-cli/bin/zk ~/.local/bin/zk
+```
+
+## 再インストール（変更加えたら毎回やる）
+
+```shell
+uv pip install -p ~/.virtualenvs/zettelkasten-cli/bin/python .
+```
+
